@@ -1,0 +1,271 @@
+#!/usr/bin/python
+#
+# Copyright (C) 2018
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 2 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+import os
+import sys
+
+from argparse import ArgumentParser
+from engine_db_query import Database, load_engine_credentials, config
+
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument(
+        '-j',
+        '--json',
+        help='Output as JSON',
+        required="--json-name" in sys.argv or
+                 "--json-description" in sys.argv or
+                 "--json-type" in sys.argv,
+        action='store_true',
+    )
+
+    parser.add_argument(
+        '-c',
+        '--csv',
+        help='Output as CSV',
+        required=False,
+        action='store_true',
+    )
+
+    parser.add_argument(
+        '-d',
+        '--database',
+        help='Database name (default: engine)',
+        required=False,
+        action='store',
+        dest='database',
+    )
+
+    parser.add_argument(
+        '-i',
+        '--json-id',
+        help='Add a ID to JSON (requires --json)',
+        required=False,
+        action='store',
+        dest='id_json',
+    )
+
+    parser.add_argument(
+        '-m',
+        '--json-description',
+        help='Message type to JSON (Info, Debug, Warning, Error)',
+        required=False,
+        action='store',
+        dest='json_description',
+    )
+
+    parser.add_argument(
+        '-t',
+        '--json-type',
+        help='Add a type identifier to JSON (requires --json)',
+        required=False,
+        action='store',
+        dest='json_type',
+    )
+
+    parser.add_argument(
+        '-l',
+        '--json-name',
+        help='Add a name for JSON (requires --json)',
+        required=False,
+        action='store',
+        dest='json_name',
+    )
+
+    parser.add_argument(
+        '-o',
+        '--port',
+        help="PostgreSQL port (default: 5432)",
+        required=False,
+        action='store',
+        dest='port',
+    )
+
+    parser.add_argument(
+        '-u',
+        '--username',
+        help="Engine username",
+        required=False,
+        action='store',
+        dest='username',
+    )
+
+    parser.add_argument(
+        '-k',
+        '--json-knowledge-base',
+        help="Knowledge Base URL",
+        required=False,
+        action='store',
+        dest='kb_url',
+    )
+
+    parser.add_argument(
+        '-b',
+        '--json-bugzilla',
+        help="Bugzilla URL",
+        required=False,
+        action='store',
+        dest='bug_url',
+    )
+
+    parser.add_argument(
+        '-p',
+        '--password',
+        help="Engine password",
+        required=False,
+        action='store',
+        dest='password',
+    )
+
+    parser.add_argument(
+        '-f',
+        '--fqdn',
+        help="Engine FQDN or IP Address",
+        required=False,
+        action='store',
+        dest='fqdn',
+    )
+
+    parser.add_argument(
+        '-s',
+        '--statement',
+        help="SQL statement or SQL file",
+        required=True,
+        action='store',
+        dest='statement',
+    )
+    args = parser.parse_args()
+
+    # Credential
+    username = None
+    password = None
+    fqdn = None
+    port = None
+    database = None
+
+    # Load Engine Configs
+    if (os.path.exists(config.ENGINE_DB_CONF_FILE) and
+            os.access(config.ENGINE_DB_CONF_FILE, os.R_OK)):
+        credential = load_engine_credentials()
+
+        if credential['user']:
+            username = credential['user']
+        else:
+            print("Can't detect Database username from %s" %
+                  config.ENGINE_DB_CONF_FILE)
+            sys.exit(1)
+
+        if credential['password']:
+            password = credential['password']
+        else:
+            print("Can't detect Database password from %s" %
+                  config.ENGINE_DB_CONF_FILE)
+            sys.exit(1)
+
+        if credential['host']:
+            fqdn = credential['host']
+        else:
+            print("Can't detect Database FQDN from %s" %
+                  config.ENGINE_DB_CONF_FILE)
+            sys.exit(1)
+
+        if credential['port']:
+            port = credential['port']
+        else:
+            port = "5432"
+
+        if credential['database']:
+            database = credential['database']
+        else:
+            database = "engine"
+    # Using --keys
+    else:
+        if args.username:
+            username = args.username
+        else:
+            print(
+                "When %s is not available, --username"
+                " is required!" % config.ENGINE_DB_CONF_FILE
+            )
+            sys.exit(1)
+
+        if args.password:
+            password = args.password
+        else:
+            print(
+                "When %s is not available, --password"
+                " is required!" % config.ENGINE_DB_CONF_FILE
+            )
+            sys.exit(1)
+
+        if args.fqdn:
+            fqdn = args.fqdn
+        else:
+            print(
+                "When %s is not available, --fqdn"
+                " is required!" % config.ENGINE_DB_CONF_FILE
+            )
+            sys.exit(1)
+
+        if args.port:
+            port = args.port
+        else:
+            port = "5432"
+
+        if args.database:
+            database = args.database
+        else:
+            database = "engine"
+
+    # Format:
+    # None meants default value, in other words, python array dict
+    format_data = None
+
+    if args.csv:
+        format_data = "csv"
+
+    if args.json:
+        format_data = "json"
+
+        if args.json_type:
+            if (args.json_type.lower() != "info" and
+                    args.json_type.lower() != "debug" and
+                    args.json_type.lower() != "warning" and
+                    args.json_type.lower() != "error"):
+                        print("Message Type should be: Info, "
+                              "Debug, Warning or Error")
+                        sys.exit(1)
+
+    with Database(
+        host=fqdn,
+        user=username,
+        password=password,
+        database=database,
+        port=port
+    ) as d:
+        ret = d.execute(
+            args.statement,
+            output_type=format_data,
+            name=args.json_name,
+            id_json=args.id_json,
+            description=args.json_description,
+            desc_type=args.json_type,
+            bugzilla=args.bug_url,
+            knowledge_base=args.kb_url
+        )
+
+        if ret:
+            print(ret)
+
+if __name__ == '__main__':
+    sys.exit(main())

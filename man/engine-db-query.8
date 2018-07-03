@@ -1,0 +1,172 @@
+.TH man 8 "14 May, 2018" "engine-db-query"
+.SH NAME
+engine-db-query \- A tool to query engine database.
+.br
+.SH SYNOPSIS
+engine-db-query [-h] [-j] [-c] [-d DATABASE] [-i ID_JSON]
+                     [-m JSON_DESCRIPTION] [-t JSON_TYPE] [-l JSON_NAME]
+                     [-o PORT] [-u USERNAME] [-k KB_URL] [-b BUG_URL]
+                     [-p PASSWORD] [-f FQDN] -s STATEMENT
+.SH DESCRIPTION
+The \fBengine-db-query\fP is a tool and python module to query engine database.
+
+The argument can be a pure SQL query statement or SQL file.
+.br
+It is posible also control the output format, like CSV, JSON or python array dict (default).
+.br
+
+Running engine-db-query in Engine machine will grab the credentials from /etc/ovirt-engine/engine.conf.d/10-setup-database.conf
+.br
+but it is possible to overwrite with the --username, --fqdn and --password.
+.P
+
+.TP
+.B --fqdn
+.br
+Engine FQDN or IP Address
+
+.TP
+.B --username
+PostgreSQL username (default: engine)
+
+.TP
+.B --password
+PostgreSQL password
+
+.TP
+.B --port
+.br
+PostgreSQL port (default: 5432)
+
+.TP
+.B --database
+PostgreSQL database (default: engine)
+
+.TP
+.B --statement
+SQL statement or SQL file
+
+.TP
+.B --json
+.br
+Return a JSON output
+
+.TP
+.B --json-name
+.br
+Add a name to json output (See examples session below)
+
+.TP
+.B --json-id
+.br
+Add an identifier id to the JSON output, often used /etc/machine-id
+
+.TP
+.B --json-type
+.br
+Add a type to JSON output, often used WARNING, ERROR, DEBUG, INFO
+
+.TP
+.B --json-description
+.br
+Add a description to JSON output
+
+.TP
+.B --json-bugzilla
+.br
+Add a bugzilla url to JSON output
+
+.TP
+.B --json-knowledge-base
+.br
+Add a knowledge base url to JSON output
+
+.TP
+.B --csv
+.br
+Return CSV output
+
+.SH LOGGING
+See \fB/tmp/engine-db-query.log
+
+.SH EXAMPLES
+.br
+\fB1)\fP JSON output (Engine Host)
+.br
+# engine-db-query --statement "SELECT * FROM cluster" \\
+                  --json
+
+.br
+\fB2)\fP CSV output (Engine Host)
+.br
+# engine-db-query --statement "SELECT * FROM cluster" \\
+                  --csv
+
+\fB3)\fP JSON output (Remote Host)
+.br
+# engine-db-query --username engine \\
+                  --password superpass123 \\
+                  --fqdn MY_ENGINE_FQDN \\
+                  --statement "SELECT * FROM cluster" \\
+                  --json
+
+\fB4)\fP JSON output (Remote Host)
+.br
+# engine-db-query --username engine \\
+                  --password superpass123 \\
+                  --fqdn MY_ENGINE_FQDN \\
+                  --statement "SELECT * FROM cluster" \\
+                  --json
+
+\fB5)\fP JSON output, adding name Clusters (Remote host)
+.br
+
+# engine-db-query --username engine \\
+                  --password superpass123 \\
+                  --fqdn MY_ENGINE_FQDN \\
+                  --statement "SELECT * FROM cluster" \\
+                  --json \\
+                  --json-name "Clusters"
+
+Returns:
+.br
+{
+.br
+	\fB"name": "check_windows_with_incorrect_timezone",
+.br
+        ...
+.br
+	"Clusters":\fP [
+.br
+		[{
+.br
+			"ha_reservation": false,
+.br
+			"hosts_with_broken_connectivity_threshold": 50,
+.br
+        ...
+.br
+
+\fB6)\fP CSV output (Remote Host)
+.br
+
+# engine-db-query --username engine \\
+                  --password superpass123 \\
+                  --fqdn MY_ENGINE_FQDN \\
+                  --statement "SELECT * FROM cluster" \\
+                  --csv
+
+\fB7)\fP Statement as a file (Remote Host)
+.br
+
+# engine-db-query --username engine \\
+                  --password superpass123 \\
+                  --fqdn MY_ENGINE_FQDN \\
+                  --statement my-file.sql
+.br
+
+.SH BUGS
+Report bugs to <http://bugzilla.redhat.com>
+
+.SH COPYRIGHT
+Copyright 2018 Red Hat, Inc.
