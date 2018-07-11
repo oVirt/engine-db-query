@@ -10,3 +10,4 @@ py-compile
 config.status
 config.log
 tmp.repos/*
+engine-db-query.spec
