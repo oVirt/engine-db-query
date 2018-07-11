@@ -1,0 +1,12 @@
+Makefile.in
+Makefile
+aclocal.m4
+configure
+missing
+install-sh
+autom4te.cache
+*.swp
+py-compile
+config.status
+config.log
+tmp.repos/*
