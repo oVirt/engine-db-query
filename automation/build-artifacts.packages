@@ -1,0 +1,9 @@
+automake
+autoconf
+make
+git
+gettext-devel
+libtool
+python-tools
+python-flake8
+python-psycopg2
