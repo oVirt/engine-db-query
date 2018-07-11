@@ -13,7 +13,7 @@ AUTOMAKE_OPTIONS = foreign 1.9
 ACLOCAL_AMFLAGS = -I m4
 
 PYTHONSOURCES = \
-	$(shell find . -name \*.py -o)
+	$(shell find . -name \*.py -o -name engine-db-query)
 
 SHELL := /bin/bash
 
