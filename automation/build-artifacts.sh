@@ -19,7 +19,7 @@ build() {
     find -name "*.tar.xz" -exec mv -v {} "$ARTIFACTSDIR/" \;
   fi
 
-  find rpmbuild -name "*.rpm" -exec mv -v {} "$ARTIFACTSDIR/" \;
+  find -name "*.rpm" -exec mv -v {} "$ARTIFACTSDIR/" \;
 
   ls -shal "$ARTIFACTSDIR/" || :
 }
