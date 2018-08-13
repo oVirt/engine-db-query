@@ -83,6 +83,14 @@ def main():
     )
 
     parser.add_argument(
+        '--log',
+        help="Specify the log filename",
+        required=False,
+        action='store',
+        dest='log',
+    )
+
+    parser.add_argument(
         '-o',
         '--port',
         help="PostgreSQL port (default: 5432)",
@@ -251,7 +259,8 @@ def main():
         user=username,
         password=password,
         database=database,
-        port=port
+        port=port,
+        logfile=args.log
     ) as d:
         ret = d.execute(
             args.statement,

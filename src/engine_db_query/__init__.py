@@ -23,7 +23,7 @@ import hashlib
 
 from datetime import datetime
 from distutils.util import strtobool
-from .config import LOGGING_FILE, ENGINE_DB_CONF_FILE
+from .config import ENGINE_DB_CONF_FILE
 
 
 class Database():
@@ -34,7 +34,8 @@ class Database():
         port,
         user,
         password,
-        database
+        database,
+        logfile=None
     ):
         """
         Params:
@@ -44,6 +45,7 @@ class Database():
         user     - PostgreSQL User
         password - PostgreSQL Password
         database - PostgreSQL Database
+        logfile  - Log file for the database transactions
         """
 
         self.connection = None
@@ -54,6 +56,7 @@ class Database():
         self.password = password
         self.database = database
         self.path_sql = None
+        self.logfile = logfile
         self.logger = self._configure_logging()
 
         self.logger.debug("====== start ========")
@@ -75,25 +78,32 @@ class Database():
         """
         The logging settings
         """
+
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
         logger.propagate = False
 
-        fh = logging.FileHandler(LOGGING_FILE)
-        fh.setLevel(logging.DEBUG)
-        debug_fmt = logging.Formatter("%(asctime)s %(message)s",
-                                      "%m/%d/%Y %I:%M:%S %p")
+        # logging: File
+        if self.logfile is not None:
+            file_handler = logging.FileHandler(self.logfile)
+            file_handler.setLevel(logging.DEBUG)
+            file_fmt = logging.Formatter("%(asctime)s %(message)s",
+                                         "%m/%d/%Y %I:%M:%S %p")
 
-        ih = logging.StreamHandler(stream=sys.stdout)
-        ih.setLevel(logging.INFO)
-        info_fmt = logging.Formatter("%(message)s",
-                                     "%m/%d/%Y %I:%M:%S %p")
+        # logging: Stdout
+        stdout_handler = logging.StreamHandler(stream=sys.stdout)
+        stdout_handler.setLevel(logging.INFO)
 
-        fh.setFormatter(debug_fmt)
-        ih.setFormatter(info_fmt)
+        stdout_fmt = logging.Formatter("%(message)s",
+                                       "%m/%d/%Y %I:%M:%S %p")
 
-        logger.addHandler(fh)
-        logger.addHandler(ih)
+        stdout_handler.setFormatter(stdout_fmt)
+        logger.addHandler(stdout_handler)
+
+        # logging: File
+        if self.logfile is not None:
+            file_handler.setFormatter(file_fmt)
+            logger.addHandler(file_handler)
 
         logging.captureWarnings(True)
 
@@ -116,7 +126,7 @@ class Database():
             )
         except Exception:
             self.logger.exception('connection failed')
-            raise
+            return
 
         if hasattr(self.connection, 'autocommit'):
             self.connection.autocommit = True
@@ -224,15 +234,14 @@ class Database():
                 statement
             )
         except psycopg2.ProgrammingError:
-            self.logger.debug(
+            self.logger.exception(
                 "A syntax error occurred, command was: %s",
                 statement,
-                exc_info=True
             )
         except:
-            self.logger.error(
+            self.logger.exception(
                 "An error occurred when executing SQL, command was: %s",
-                exc_info=True
+                statement
             )
 
         if cursor.description is not None:
@@ -274,15 +283,11 @@ class Database():
                 sys.stdout
             )
         except psycopg2.ProgrammingError:
-            self.logger.debug("%s", query, exc_info=True)
-            self.logger.info(
-                "A syntax error occurred, for details, see: {0}".format(
-                    LOGGING_FILE)
-            )
+            self.logger.exception("%s", query)
         except:
-            self.logger.error(
+            self.logger.exception(
                 "An error occurred when executing SQL, command was: %s",
-                exc_info=True
+                statement
             )
 
     def query_return_json(
@@ -332,15 +337,11 @@ class Database():
                 query
             )
         except psycopg2.ProgrammingError:
-            self.logger.debug("%s", query, exc_info=True)
-            self.logger.info(
-                "A syntax error occurred, for details, see: {0}".format(
-                    LOGGING_FILE)
-            )
+            self.logger.exception("%s", query)
         except:
-            self.logger.error(
+            self.logger.exception(
                 "An error occurred when executing SQL, command was: %s",
-                exc_info=True
+                statement
             )
         time_exec = time.time() - start_time
 

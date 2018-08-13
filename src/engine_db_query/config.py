@@ -12,8 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-LOGGING_FILE = '/tmp/engine-db-query.log'
-
 ENGINE_DB_CONF_FILE = (
     '/etc/ovirt-engine/engine.conf.d/10-setup-database.conf'
 )

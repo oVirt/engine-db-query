@@ -86,15 +86,17 @@ Add a knowledge base url to JSON output
 .br
 Return CSV output
 
-.SH LOGGING
-See \fB/tmp/engine-db-query.log
+.TP
+.B --log
+.br
+Specify the path for the log filename (if not specificed, stdout/stderr are available)
 
 .SH EXAMPLES
 .br
 \fB1)\fP JSON output (Engine Host)
 .br
 # engine-db-query --statement "SELECT * FROM cluster" \\
-                  --json
+                  --json --log /tmp/engine-db-query.log
 
 .br
 \fB2)\fP CSV output (Engine Host)
