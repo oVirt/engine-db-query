@@ -21,7 +21,7 @@ SUBDIRS = \
 	src/engine_db_query \
 	src/bin \
 	man \
-	$(NULL)	
+	$(NULL)
 
 EXTRA_DIST = \
 	engine-db-query.spec \
@@ -70,7 +70,7 @@ flake8:
 	@for M in $(PYTHONSOURCES); \
 	do \
 		echo flake8 on "$$M"; \
-		PYTHONPATH=. flake8 $$M || exit 1; \
+		PYTHONPATH=. flake8 --ignore=W605,W504 $$M || exit 1; \
 	done
 
 2to3:

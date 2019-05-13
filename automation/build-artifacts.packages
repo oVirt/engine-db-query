@@ -11,3 +11,4 @@ python-devel
 python-setuptools
 python3-devel
 python3-flake8
+python-unversioned-command
