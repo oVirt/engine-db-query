@@ -38,9 +38,6 @@ Source0:        engine-db-query-%{package_version}.tar.gz
 
 BuildArch:      noarch
 
-BuildRequires: python2-devel
-BuildRequires: python-setuptools
-
 %if 0%{?with_check}
 BuildRequires: python-tools
 BuildRequires: python-flake8
@@ -59,6 +56,9 @@ BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 BuildRequires: python3-flake8
 BuildRequires: python-tools
+%else
+BuildRequires: python2-devel
+BuildRequires: python-setuptools
 %endif
 
 Requires: python-psycopg2
