@@ -38,6 +38,8 @@ Source0:        engine-db-query-%{package_version}.tar.gz
 
 BuildArch:      noarch
 
+BuildRequires: /usr/bin/python
+
 %if 0%{?with_check}
 BuildRequires: python-tools
 BuildRequires: python-flake8
