@@ -238,7 +238,7 @@ class Database():
                 "A syntax error occurred, command was: %s",
                 statement,
             )
-        except:
+        except Exception:
             self.logger.exception(
                 "An error occurred when executing SQL, command was: %s",
                 statement
@@ -250,7 +250,7 @@ class Database():
                 entry = cursor.fetchone()
                 if entry is None:
                     break
-                ret.append(dict(zip(cols, entry)))
+                ret.append(dict(list(zip(cols, entry))))
         return ret
 
     def query_return_csv(
@@ -273,7 +273,7 @@ class Database():
             ) TO STDOUT WITH CSV DELIMITER E'\|' HEADER
             """.format(
                 statement
-            )
+            )  # noqa: W605
         )
 
         self.logger.debug("\n\tSQL QUERY FOR CSV:\n %s" % query)
@@ -284,7 +284,7 @@ class Database():
             )
         except psycopg2.ProgrammingError:
             self.logger.exception("%s", query)
-        except:
+        except Exception:
             self.logger.exception(
                 "An error occurred when executing SQL, command was: %s",
                 statement
@@ -338,7 +338,7 @@ class Database():
             )
         except psycopg2.ProgrammingError:
             self.logger.exception("%s", query)
-        except:
+        except Exception:
             self.logger.exception(
                 "An error occurred when executing SQL, command was: %s",
                 statement

@@ -250,9 +250,8 @@ def main():
                     args.json_type.lower() != "debug" and
                     args.json_type.lower() != "warning" and
                     args.json_type.lower() != "error"):
-                        print("Message Type should be: Info, "
-                              "Debug, Warning or Error")
-                        sys.exit(1)
+                print("Message Type should be: Info, Debug, Warning or Error")
+                sys.exit(1)
 
     with Database(
         host=fqdn,
