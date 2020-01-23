@@ -9,7 +9,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 define([VERSION_MAJOR], [1])
-define([VERSION_MINOR], [4])
+define([VERSION_MINOR], [5])
 define([VERSION_FIX], [0])
 define([VERSION_NUMBER], VERSION_MAJOR[.]VERSION_MINOR[.]VERSION_FIX)
 define([VERSION_SUFFIX], [_master])
@@ -25,34 +25,38 @@ AC_SUBST([PACKAGE_RPM_RELEASE])
 AC_SUBST([COMMIT])
 AC_SUBST([SHORT_COMMIT])
 
+AM_PATH_PYTHON([3])
+AC_SUBST(PYTHON3,$PYTHON)
+AC_SUBST(HAVE_PYTHON3,$HAVE_PYTHON)
+AC_SUBST(PYTHON3_VERSION,$PYTHON_VERSION)
+AC_SUBST(PYTHON3_PREFIX,$PYTHON_PREFIX)
+AC_SUBST(PYTHON3_EXEC_PREFIX,$PYTHON_EXEC_PREFIX)
+AC_SUBST(PYTHON3_PLATFORM,$PYTHON_PLATFORM)
+AC_SUBST(python3dir,$pythondir)
+AC_SUBST(pkgpython3dir,$pkgpythondir)
+AC_SUBST(py3execdir,$pyexecdir)
+AC_SUBST(pkgpy3execdir,$pkgpyexecdir)
+
 AC_PROG_INSTALL
 AC_PROG_SED
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 AC_PROG_LN_S
 
-AM_CONDITIONAL(BUILD_PYTHON3, false)
 
-AC_PATH_PROG([PYTHON3], [python3], [no])
-[if test "$PYTHON3" == "no"]
-[then]
-    AM_PATH_PYTHON([2])
-    AC_SUBST([enginedbquerypythonlibdir], ["\$(pythondir)/engine_db_query"])
-[else]
-    AC_SUBST([PYTHON3_PREFIX], ['${prefix}'])
-    AC_SUBST([PYTHON3_EXEC_PREFIX], ['${exec_prefix}'])
+AC_SUBST([PYTHON3_PREFIX], ['${prefix}'])
+AC_SUBST([PYTHON3_EXEC_PREFIX], ['${exec_prefix}'])
 
-    PYTHON3_DIR=`$PYTHON3 -c "import distutils.sysconfig; \
-        print(distutils.sysconfig.get_python_lib(0,0,prefix='$PYTHON3_PREFIX'))"`
-    PYTHON3_EXECDIR=`$PYTHON3 -c "import distutils.sysconfig; \
-        print(distutils.sysconfig.get_python_lib(1,0,prefix='$PYTHON3_EXEC_PREFIX'))"`
+PYTHON3_DIR=`$PYTHON3 -c "import distutils.sysconfig; \
+	print(distutils.sysconfig.get_python_lib(0,0,prefix='$PYTHON3_PREFIX'))"`
+PYTHON3_EXECDIR=`$PYTHON3 -c "import distutils.sysconfig; \
+	print(distutils.sysconfig.get_python_lib(1,0,prefix='$PYTHON3_EXEC_PREFIX'))"`
 
-    AC_SUBST(PYTHON3_CFLAGS)
-    AC_SUBST(PYTHON3_LIBS)
-    AC_SUBST(python3dir, $PYTHON3_DIR)
-    AC_SUBST(py3execdir, $PYTHON3_EXECDIR)
-    AC_SUBST([enginedbquerypythonlibdir], ["\$(python3dir)/engine_db_query"])
-[fi]
+AC_SUBST(PYTHON3_CFLAGS)
+AC_SUBST(PYTHON3_LIBS)
+AC_SUBST(python3dir, $PYTHON3_DIR)
+AC_SUBST(py3execdir, $PYTHON3_EXECDIR)
+AC_SUBST([enginedbquerypythonlibdir], ["\$(python3dir)/engine_db_query"])
 
 # Python tools
 AC_ARG_VAR([PYFLAKES], [flake8 utility])
