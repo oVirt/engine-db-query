@@ -1,6 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #
-# Copyright (C) 2018
+# Copyright (C) 2018-2020
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -169,22 +169,22 @@ def main():
         if credential['user']:
             username = credential['user']
         else:
-            print("Can't detect Database username from %s" %
-                  config.ENGINE_DB_CONF_FILE)
+            print(("Can't detect Database username from %s" %
+                  config.ENGINE_DB_CONF_FILE))
             sys.exit(1)
 
         if credential['password']:
             password = credential['password']
         else:
-            print("Can't detect Database password from %s" %
-                  config.ENGINE_DB_CONF_FILE)
+            print(("Can't detect Database password from %s" %
+                  config.ENGINE_DB_CONF_FILE))
             sys.exit(1)
 
         if credential['host']:
             fqdn = credential['host']
         else:
-            print("Can't detect Database FQDN from %s" %
-                  config.ENGINE_DB_CONF_FILE)
+            print(("Can't detect Database FQDN from %s" %
+                  config.ENGINE_DB_CONF_FILE))
             sys.exit(1)
 
         if credential['port']:
@@ -201,28 +201,28 @@ def main():
         if args.username:
             username = args.username
         else:
-            print(
+            print((
                 "When %s is not available, --username"
                 " is required!" % config.ENGINE_DB_CONF_FILE
-            )
+            ))
             sys.exit(1)
 
         if args.password:
             password = args.password
         else:
-            print(
+            print((
                 "When %s is not available, --password"
                 " is required!" % config.ENGINE_DB_CONF_FILE
-            )
+            ))
             sys.exit(1)
 
         if args.fqdn:
             fqdn = args.fqdn
         else:
-            print(
+            print((
                 "When %s is not available, --fqdn"
                 " is required!" % config.ENGINE_DB_CONF_FILE
-            )
+            ))
             sys.exit(1)
 
         if args.port:
