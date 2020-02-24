@@ -29,11 +29,11 @@ Source0:        engine-db-query-%{package_version}.tar.gz
 
 BuildArch:      noarch
 
-BuildRequires: /usr/bin/python3
-
-%if 0%{?with_check}
-BuildRequires: python3-tools
-BuildRequires: python3-flake8
+%if 0%{?rhel} && 0%{?rhel} < 8
+BuildRequires: python3
+BuildRequires: python3-rpm-macros
+%else
+BuildRequires: python3-devel
 %endif
 
 # Autotools BuildRequires
@@ -45,15 +45,13 @@ BuildRequires: libtool
 %endif
 
 %if 0%{?with_check}
-BuildRequires: python3-devel
+BuildRequires: python3-tools
 BuildRequires: python3-setuptools
 BuildRequires: python3-flake8
 %endif
 
-Requires: /usr/bin/python3
+Requires: python3
 Requires: python3-psycopg2
-
-%{!?_licensedir:%global license %%doc}
 
 %description
 python engine-db-query is a python 3 tool and library to manage data from oVirt database

@@ -4,11 +4,6 @@ make
 git
 gettext-devel
 libtool
-python2-tools
-python2-flake8
-python2-psycopg2
-python-devel
-python-setuptools
 python3-devel
 python3-flake8
-python-unversioned-command
+python3-tools
