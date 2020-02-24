@@ -12,12 +12,12 @@ define([VERSION_MAJOR], [1])
 define([VERSION_MINOR], [5])
 define([VERSION_FIX], [0])
 define([VERSION_NUMBER], VERSION_MAJOR[.]VERSION_MINOR[.]VERSION_FIX)
-define([VERSION_SUFFIX], [_master])
+define([VERSION_SUFFIX], [])
 
 AC_INIT([engine-db-query], VERSION_NUMBER[]VERSION_SUFFIX, [devel@ovirt.org])
 PACKAGE_NAME="engine-db-query"
 PACKAGE_RPM_VERSION="VERSION_NUMBER"
-PACKAGE_RPM_RELEASE="0"
+PACKAGE_RPM_RELEASE="1"
 AM_INIT_AUTOMAKE([-Wall -Werror foreign -Wno-portability tar-pax])
 
 AC_SUBST([PACKAGE_RPM_VERSION])

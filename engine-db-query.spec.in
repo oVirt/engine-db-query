@@ -85,6 +85,9 @@ make check-local
 %{_mandir}/man8/*
 
 %changelog
+* Mon Feb 24 2020 Sandro Bonazzola <sbonazzo@redhat.com> 1.5.0-1
+- Adjust spec file
+
 * Thu Jan 23 2020 Douglas Schilling Landgraf <dougsland@redhat.com> 1.5-0
 - Convert project to python3
 
