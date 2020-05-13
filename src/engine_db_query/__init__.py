@@ -175,7 +175,7 @@ class Database():
         if os.path.exists(statement):
             self.path_sql = statement
             self.logger.debug("file: %s" % statement)
-            with open(statement, 'r') as f:
+            with open(statement, 'r', encoding="utf-8") as f:
                 statement = f.read().strip()
 
         cursor = self.connection.cursor()
