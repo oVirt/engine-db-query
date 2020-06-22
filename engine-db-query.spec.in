@@ -85,7 +85,7 @@ make check-local
 %{_mandir}/man8/*
 
 %changelog
-* Thu Jun 11 2020 Douglas Schilling Landgraf <dougsland@redhat.com> 1.6.0-1
+* Thu Jun 11 2020 Douglas Schilling Landgraf <dougsland@redhat.com> 1.6.1-1
 - fix encode for py3
 
 * Mon Feb 24 2020 Sandro Bonazzola <sbonazzo@redhat.com> 1.5.0-1
