@@ -354,6 +354,7 @@ class Database():
         if self.path_sql:
             file_name = self.path_sql.split("/")[-1]
 
+        file_name = file_name.encode("utf-8")
         json_output = (
             '{start_json} '
             '"id_host": "{id_host}"'
