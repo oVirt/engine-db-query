@@ -4,8 +4,6 @@ stage:
   - check-merged
   - check-patch
 distros:
-  - fc30
   - el8
-  - el7
 release_branches:
-  master: ["ovirt-master", "ovirt-4.3"]
+  master: "ovirt-master"
