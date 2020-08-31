@@ -25,7 +25,7 @@ License:        GPLv2
 Group:          System Environment/Libraries
 URL:            https://ovirt.org/
 
-Source0:        https://resources.ovirt.org/pub/src/%{name}/%{name}-%{version}.tar.gz
+Source0:        https://resources.ovirt.org/pub/src/%{name}/%{name}-%{package_version}.tar.gz
 
 BuildArch:      noarch
 
