@@ -178,6 +178,12 @@ class Database():
             with open(statement, 'r', encoding="utf-8") as f:
                 statement = f.read().strip()
 
+        if (
+            sys.stdout.encoding is None
+            or "UTF-8" not in sys.stdout.encoding.upper()
+        ):
+            statement = statement.replace("\u2014", "-")
+
         cursor = self.connection.cursor()
 
         self.logger.debug("\n\tOUTPUT TYPE: %s\n" % output_type)
