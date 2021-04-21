@@ -85,6 +85,9 @@ make check-local
 %{_mandir}/man8/*
 
 %changelog
+* Wed Apr 21 2021 Sandro Bonazzola <sbonazzo@redhat.com> 1.6.3-1
+- Rebase on upstream 1.6.3
+
 * Mon Aug 31 2020 Sandro Bonazzola <sbonazzo@redhat.com> 1.6.2-1
 - Rebase on upstream 1.6.2
 
