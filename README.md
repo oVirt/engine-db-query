@@ -1,5 +1,7 @@
 # engine-db-query
 
+[![Copr build status](https://copr.fedorainfracloud.org/coprs/ovirt/ovirt-master-snapshot/package/engine-db-query/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/ovirt/ovirt-master-snapshot/package/engine-db-query/)
+
 Welcome to the Engine Database Query tool source repository.
 
 This repository is hosted on [gerrit.ovirt.org:engine-db-query](https://gerrit.ovirt.org/#/admin/projects/engine-db-query)
