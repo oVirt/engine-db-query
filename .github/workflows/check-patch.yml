@@ -16,8 +16,9 @@ jobs:
     steps:
     - name: prepare env
       run: |
-           mkdir -p ${PWD}/tmp.repos/BUILD
-           yum install -y --setopt=tsflags=nodocs autoconf automake gettext-devel git systemd make git rpm-build libtool python3-devel python3-flake8 python3-tools
+           dnf install -y --setopt=tsflags=nodocs autoconf automake gettext-devel git systemd make git rpm-build libtool python3-devel python3-tools
+           dnf copr enable -y sbonazzo/EL8_collection
+           dnf install -y --setopt=tsflags=nodocs python3-flake8
 
     - uses: actions/checkout@v2
       with:
