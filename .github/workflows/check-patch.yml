@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: prepare env
       run: |
-           dnf install -y --setopt=tsflags=nodocs autoconf automake gettext-devel git systemd make git rpm-build libtool python3-devel python3-tools
+           dnf install -y --setopt=tsflags=nodocs autoconf automake gettext-devel git systemd make git rpm-build libtool python3-devel python3-tools epel-release
            dnf copr enable -y sbonazzo/EL8_collection
            dnf install -y --setopt=tsflags=nodocs python3-flake8
 
