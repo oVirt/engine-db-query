@@ -4,8 +4,7 @@
 
 Welcome to the Engine Database Query tool source repository.
 
-This repository is hosted on [gerrit.ovirt.org:engine-db-query](https://gerrit.ovirt.org/#/admin/projects/engine-db-query)
-and a **backup** of it is hosted on [GitHub:engine-db-query](https://github.com/oVirt/engine-db-query)
+This repository is hosted on [GitHub:engine-db-query](https://github.com/oVirt/engine-db-query).
 
 
 ## About
@@ -16,26 +15,23 @@ It is possible also to control the output format, like CSV, JSON or python like.
 
 ## How to contribute
 
+All contributions are welcome - patches, bug reports, and documentation issues.
+
 ### Submitting patches
 
-Patches are welcome!
-
-Please submit patches to [gerrit.ovirt.org:engine-db-query](https://gerrit.ovirt.org/#/admin/projects/engine-db-query).
-If you are not familiar with the review process for Gerrit patches you can read about [Working with oVirt Gerrit](https://ovirt.org/develop/dev-process/working-with-gerrit.html)
-on the [oVirt](https://ovirt.org/) website.
-
-**NOTE**: We might not notice pull requests that you create on Github, because we only use Github for backups.
-
+Please submit patches to [GitHub:engine-db-query](https://github.com/oVirt/engine-db-query). If you are not familiar with the process, you can read about [collaborating with pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests) on the GitHub website.
 
 ### Found a bug or documentation issue?
 To submit a bug or suggest an enhancement for Engine Database Query tool please use
 [oVirt Bugzilla for engine-db-query component](https://bugzilla.redhat.com/enter_bug.cgi?product=Red%20Hat%20Enterprise%20Virtualization%20Manager&component=ovirt-engine-db-query).
 
-If you find a documentation issue on the oVirt website please navigate and click "Report an issue on GitHub" in the page footer.
+If you don't have a Bugzilla account, you can still report [issues](https://github.com/oVirt/engine-db-query/issues). If you find a documentation issue on the oVirt website, please navigate to the page footer and click "Report an issue on GitHub".
+If you find a documentation issue on the oVirt website, please navigate to the page footer and click "Report an issue on GitHub".
 
 
 ## Still need help?
-If you have any other questions, please join [oVirt Users forum / mailing list](https://lists.ovirt.org/admin/lists/users.ovirt.org/) and ask there.
+
+If you have any other questions or suggestions, you can join and contact us on the [oVirt Users forum / mailing list](https://lists.ovirt.org/admin/lists/users.ovirt.org/).
 
 
 
