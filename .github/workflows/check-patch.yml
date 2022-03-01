@@ -1,3 +1,4 @@
+---
 name: Check patch
 
 on:
@@ -11,41 +12,42 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: quay.io/centos/centos:stream8
+      image: quay.io/ovirt/buildcontainer:el8stream
 
     steps:
-    - name: prepare env
-      run: |
-           dnf install -y --setopt=tsflags=nodocs autoconf automake gettext-devel git systemd make git rpm-build libtool python3-devel python3-tools epel-release
-           dnf copr enable -y sbonazzo/EL8_collection
-           dnf install -y --setopt=tsflags=nodocs python3-flake8
+      - name: prepare env
+        run: |
+            dnf install -y --setopt=tsflags=nodocs autoconf automake gettext-devel git systemd make git rpm-build libtool python3-devel python3-tools epel-release
+            dnf copr enable -y sbonazzo/EL8_collection
+            dnf install -y --setopt=tsflags=nodocs python3-flake8
 
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-    - name: autogen
-      run: ./autogen.sh
+      - name: autogen
+        run: ./autogen.sh
 
-    - name: configure
-      run: ./configure
+      - name: configure
+        run: ./configure
 
-    - name: run distcheck
-      run: make -j distcheck
+      - name: run distcheck
+        run: make -j distcheck
 
-    - name: Build RPM
-      run: make -j rpm
+      - name: Build RPM
+        run: make -j rpm
 
-    - name: Collect artifacts
-      run: |
-          mkdir -p exported-artifacts
-          find tmp.repos -iname \*rpm -exec mv "{}" exported-artifacts/ \;
-          mv ./*tar.gz exported-artifacts/
-    - name: test install
-      run: |
-          yum --downloadonly install -y exported-artifacts/*noarch.rpm
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: artifacts
-        path: exported-artifacts/
+      - name: Collect artifacts
+        run: |
+            mkdir -p exported-artifacts
+            find tmp.repos -iname \*rpm -exec mv "{}" exported-artifacts/ \;
+            mv ./*tar.gz exported-artifacts/
+
+      - name: test install
+        run: |
+            yum --downloadonly install -y exported-artifacts/*noarch.rpm
+
+      - name: Upload artifacts
+        uses: ovirt/upload-rpms-action@v2
+        with:
+          directory: exported-artifacts/
