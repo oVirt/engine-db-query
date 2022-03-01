@@ -24,7 +24,7 @@ Summary:        A python module to query engine database
 License:        GPLv2
 Group:          System Environment/Libraries
 URL:            https://ovirt.org/
-Source0:        https://github.com/oVirt/%{name}/releases/download/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/oVirt/%{name}/releases/download/%{name}-%{version}/%{name}-%{package_version}.tar.gz
 
 BuildArch:      noarch
 
