@@ -23,9 +23,8 @@ Please submit patches to [GitHub:engine-db-query](https://github.com/oVirt/engin
 
 ### Found a bug or documentation issue?
 To submit a bug or suggest an enhancement for Engine Database Query tool please use
-[oVirt Bugzilla for engine-db-query component](https://bugzilla.redhat.com/enter_bug.cgi?product=Red%20Hat%20Enterprise%20Virtualization%20Manager&component=ovirt-engine-db-query).
+[GitHub issues](https://github.com/oVirt/engine-db-query/issues).
 
-If you don't have a Bugzilla account, you can still report [issues](https://github.com/oVirt/engine-db-query/issues). If you find a documentation issue on the oVirt website, please navigate to the page footer and click "Report an issue on GitHub".
 If you find a documentation issue on the oVirt website, please navigate to the page footer and click "Report an issue on GitHub".
 
 
