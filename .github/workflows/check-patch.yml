@@ -6,24 +6,36 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+  workflow_dispatch:
 
 jobs:
-  build-el8:
-
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: centos-stream-9
+            container-name: el9stream
+          - name: centos-stream-10
+            container-name: el10stream
+
+    name: Build and test on ${{ matrix.name }}
     container:
-      image: quay.io/ovirt/buildcontainer:el8stream
+      image: quay.io/ovirt/buildcontainer:${{ matrix.container-name }}
 
     steps:
-      - name: prepare env
-        run: |
-            dnf install -y --setopt=tsflags=nodocs autoconf automake gettext-devel git systemd make git rpm-build libtool python3-devel python3-tools epel-release
-            dnf copr enable -y sbonazzo/EL8_collection
-            dnf install -y --setopt=tsflags=nodocs python3-flake8
+      - name: Mark repository as safe
+        run: git config --global --add safe.directory "$(pwd)"
 
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: checkout sources
+        uses: ovirt/checkout-action@main
+      
+      - name: install dnf dependencies
+        run: dnf install -y autoconf automake gettext-devel git systemd make rpm-build libtool python3-pip epel-release python-devel
+
+      - name: install python dependencies
+        run: pip install flake8 tools
 
       - name: autogen
         run: ./autogen.sh
@@ -48,6 +60,6 @@ jobs:
             yum --downloadonly install -y exported-artifacts/*noarch.rpm
 
       - name: Upload artifacts
-        uses: ovirt/upload-rpms-action@v2
+        uses: ovirt/upload-rpms-action@main
         with:
           directory: exported-artifacts/

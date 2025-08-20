@@ -34,6 +34,7 @@ BuildRequires: python3-devel
 %if 0%{?enable_autotools}
 BuildRequires: autoconf
 BuildRequires: automake
+BuildRequires: make
 BuildRequires: gettext-devel
 BuildRequires: libtool
 %endif
