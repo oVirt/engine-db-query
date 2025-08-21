@@ -30,6 +30,7 @@ BuildArch:      noarch
 
 BuildRequires: make
 BuildRequires: python3-devel
+BuildRequires: python3-setuptools
 
 # Autotools BuildRequires
 %if 0%{?enable_autotools}
@@ -41,7 +42,6 @@ BuildRequires: libtool
 
 %if 0%{?with_check}
 BuildRequires: python3-tools
-BuildRequires: python3-setuptools
 BuildRequires: python3-flake8
 %endif
 
