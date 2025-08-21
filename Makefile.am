@@ -63,7 +63,7 @@ clean-local:
 
 .PHONY: rpm srpm
 
-check-local: 2to3 flake8
+check-local: flake8
 	@echo -e "---\n Passed.\n---"
 
 flake8:
@@ -71,11 +71,4 @@ flake8:
 	do \
 		echo flake8 on "$$M"; \
 		PYTHONPATH=. flake8 --ignore=W605,W504 $$M || exit 1; \
-	done
-
-2to3:
-	@for M in $(PYTHONSOURCES); \
-	do \
-		echo 2to3 on "$$M"; \
-		PYTHONPATH=. 2to3 $$M || exit 1; \
 	done
