@@ -28,13 +28,13 @@ Source0:        https://github.com/oVirt/%{name}/releases/download/%{name}-%{ver
 
 BuildArch:      noarch
 
+BuildRequires: make
 BuildRequires: python3-devel
 
 # Autotools BuildRequires
 %if 0%{?enable_autotools}
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: make
 BuildRequires: gettext-devel
 BuildRequires: libtool
 %endif
