@@ -80,6 +80,9 @@ make check-local
 %{_mandir}/man8/*
 
 %changelog
+* Thu Oct 16 2025 Jean-Louis Dupond <jean-louis@dupond.be> - 1.6.5-1
+- Rebase on upstream 1.6.5
+
 * Tue Mar 01 2022 Sandro Bonazzola <sbonazzo@redhat.com> - 1.6.4-1
 - Rebase on upstream 1.6.4
 
