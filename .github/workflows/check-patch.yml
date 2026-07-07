@@ -37,7 +37,7 @@ jobs:
         run: git config --global --add safe.directory "$(pwd)"
 
       - name: checkout sources
-        uses: ovirt/checkout-action@main
+        uses: actions/checkout@v7
       
       - name: install dnf dependencies
         run: dnf install -y autoconf automake gettext-devel git systemd make rpm-build libtool python3-pip epel-release python-devel
