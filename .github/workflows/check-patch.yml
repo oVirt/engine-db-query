@@ -51,6 +51,11 @@ jobs:
       - name: configure
         run: ./configure
 
+      - name: Add git revision suffix
+        run: |
+          SUFFIX=".$(date -u +%Y%m%d%H%M%S).git$(git rev-parse --short HEAD)"
+          sed "s:%{?release_suffix}:${SUFFIX}:" -i engine-db-query.spec
+
       - name: run distcheck
         run: make -j distcheck
 
