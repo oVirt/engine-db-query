@@ -12,12 +12,16 @@ define([VERSION_MAJOR], [1])
 define([VERSION_MINOR], [6])
 define([VERSION_FIX], [6])
 define([VERSION_NUMBER], VERSION_MAJOR[.]VERSION_MINOR[.]VERSION_FIX)
-define([VERSION_SUFFIX], [master])
 
-AC_INIT([engine-db-query], VERSION_NUMBER[]VERSION_SUFFIX, [devel@ovirt.org])
+AC_INIT([engine-db-query], VERSION_NUMBER, [devel@ovirt.org])
 PACKAGE_NAME="engine-db-query"
 PACKAGE_RPM_VERSION="VERSION_NUMBER"
-PACKAGE_RPM_RELEASE="0"
+
+AC_ARG_VAR([PACKAGE_RPM_RELEASE],
+    [RPM release field (default: 0.master for development, release number for release builds)])
+AS_IF([test -z "$PACKAGE_RPM_RELEASE"],
+    [PACKAGE_RPM_RELEASE="0.master"])
+
 AM_INIT_AUTOMAKE([-Wall -Werror foreign -Wno-portability tar-pax])
 
 AC_SUBST([PACKAGE_RPM_VERSION])

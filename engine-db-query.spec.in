@@ -14,9 +14,6 @@
 
 %global modname engine_db_query
 
-%global commit 0000000000000000000000000000000000000000
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
 Name:           @PACKAGE_NAME@
 Version:        @PACKAGE_RPM_VERSION@
 Release:        @PACKAGE_RPM_RELEASE@%{?release_suffix}%{?dist}

@@ -41,10 +41,11 @@ DISTCLEANFILES = \
 DISTCLEANDIRS = autom4te.cache
 
 TMPREPOS = tmp.repos
-RPM_FLAGS := --define="_topdir `pwd`/$(TMPREPOS)"
+RPMBUILD_ARGS := --define="_topdir `pwd`/$(TMPREPOS)"
+RPMBUILD_ARGS += $(if $(RELEASE_SUFFIX),--define="release_suffix $(RELEASE_SUFFIX)")
 
 rpm: srpm
-	rpmbuild $(RPM_FLAGS) --rebuild "$(TMPREPOS)"/SRPMS/*.src.rpm
+	rpmbuild $(RPMBUILD_ARGS) --rebuild "$(TMPREPOS)"/SRPMS/*.src.rpm
 	cp $(distdir).tar.gz $(TMPREPOS)/SOURCES/
 	@echo
 	@echo "rpm available at '$(TMPREPOS)'"
@@ -54,7 +55,7 @@ rpm: srpm
 srpm: dist
 	rm -rf "$(TMPREPOS)"
 	mkdir -vp $(TMPREPOS)/{SPECS,RPMS,SRPMS,SOURCES}
-	rpmbuild $(RPM_FLAGS) -ts $(distdir).tar.gz
+	rpmbuild $(RPMBUILD_ARGS) -ts $(distdir).tar.gz
 	@echo
 	@echo "srpm available at '$(TMPREPOS)'"
 
